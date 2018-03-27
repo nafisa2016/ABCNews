@@ -29,10 +29,13 @@ class NormalTableViewCell: UITableViewCell {
     func configure(normalCellImgLink: String,normalCellTitle:String,normalCellDesc: String){
         
         self.normalCellTitleLbl.text = normalCellTitle
+        self.normalCellTitleLbl.numberOfLines = 0
+        self.normalCellTitleLbl.lineBreakMode = .byWordWrapping
+        
         self.normalCellDescLbl.text  = normalCellDesc
         
         //populate cell image
-        self.normalCellImgView.getImage(contentMode: .scaleAspectFit, url: normalCellImgLink)
+        self.normalCellImgView.getImage(contentMode: .scaleToFill, url: normalCellImgLink)
     }
 
 }

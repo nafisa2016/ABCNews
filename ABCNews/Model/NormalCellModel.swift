@@ -11,18 +11,18 @@ import Foundation
 struct Item: Decodable {
     let title : String
     let pubDate : String
-    let thumbnail : String?
-    let link : String
+    let thumbnail : String
+    let link : String?
     
     enum CodingKeys : String, CodingKey {
         case title
         case pubDate
-        case link
+        case thumbnail
         case enclosure
     }
     
     enum EnclosureKeys : String , CodingKey {
-        case thumbnail
+        case link
     }
     
     init(from decoder: Decoder) throws {
@@ -30,11 +30,11 @@ struct Item: Decodable {
         
         title = try item.decode(String.self,forKey: .title)
         pubDate = try item.decode(String.self,forKey: .pubDate)
-        link = try item.decode(String.self,forKey: .link)
+        thumbnail = try item.decode(String.self,forKey: .thumbnail)
         
         let enclosure = try item.nestedContainer(keyedBy: EnclosureKeys.self, forKey: .enclosure)
         
-        thumbnail = try enclosure.decodeIfPresent(String.self, forKey: .thumbnail)
+        link = try enclosure.decodeIfPresent(String.self, forKey: .link)
         
     }
     

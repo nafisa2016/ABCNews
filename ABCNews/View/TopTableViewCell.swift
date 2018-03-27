@@ -30,10 +30,13 @@ class TopTableViewCell: UITableViewCell {
     func configure(topCellImgLink: String,topCellTitle:String,topCellDesc: String){
         
         self.topCellTitleLbl.text = topCellTitle
+        self.topCellTitleLbl.numberOfLines = 0
+        self.topCellTitleLbl.lineBreakMode = .byWordWrapping
+        
         self.topCellDescLbl.text  = topCellDesc
         
         //populate cell image
-        self.topCellImgView.getImage(contentMode: .scaleAspectFit, url: topCellImgLink)
+        self.topCellImgView.getImage(contentMode: .scaleAspectFill, url: topCellImgLink)
     }
 
 }

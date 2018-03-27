@@ -24,7 +24,7 @@ class NewsFeedNetworking {
     }
     
     
-    func getFeed(){
+    func getFeed(completion: @escaping ([Item]) -> Void){
         
         let endPoint : String = "https://api.rss2json.com/v1/api.json?rss_url=http://www.abc.net.au/news/feed/51120/rss.xml"
         
@@ -62,7 +62,7 @@ class NewsFeedNetworking {
                         allFeedData  = alldata
                     }
                     
-                    //completion(allFeedData)
+                    completion(allFeedData)
                 }
                 
             } //weak self

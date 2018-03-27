@@ -22,7 +22,9 @@ class NewsTableViewController: UITableViewController {
         tableView.contentInset = UIEdgeInsets.zero
         
         //get news feed
-        newsViewModel.getNewsFeed()
+        newsViewModel.getNewsFeed{
+            self.tableView.reloadData()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,7 +54,7 @@ class NewsTableViewController: UITableViewController {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "topCell", for: indexPath) as! TopTableViewCell
             
-            cell.configure(topCellImgLink: newsViewModel.getCellImageLink(row: indexPath.row),
+            cell.configure(topCellImgLink: newsViewModel.getCellThumbnail(row: indexPath.row),
                            topCellTitle: newsViewModel.getCellTitle(row: indexPath.row),
                            topCellDesc: newsViewModel.getCellPublishDate(row: indexPath.row))
             
@@ -70,6 +72,15 @@ class NewsTableViewController: UITableViewController {
             
         }
         
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        return UITableViewAutomaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
     }
 
 }
