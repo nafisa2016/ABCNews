@@ -10,56 +10,19 @@ import Foundation
 
 class NewsFeedNetworking {
     
-    struct Response : Decodable  {
-        let title : String
-        let pubDate : String
-        let thumbnail : String?
-        let link : String
-        
+    fileprivate struct Response : Decodable  {
+        let items: [Item]
         
         enum CodingKeys: String, CodingKey {
-            case items = "items"
-        }
-        
-        enum ItemKeys : String, CodingKey {
-            case title
-            case pubDate
-            case link
-            case enclosure
-        }
-        
-        enum EnclosureKeys : String , CodingKey {
-            case thumbnail
+            case items
         }
         
         init(from decoder: Decoder) throws {
-            let values = try decoder.container(keyedBy: CodingKeys.self)
-            
-            let item = try values.nestedContainer(keyedBy: ItemKeys.self, forKey: .items)
-            
-            title = try item.decode(String.self,forKey: .title)
-            pubDate = try item.decode(String.self,forKey: .pubDate)
-            link = try item.decode(String.self,forKey: .link)
-            
-            let enclosure = try item.nestedContainer(keyedBy: EnclosureKeys.self, forKey: .enclosure)
-            
-            thumbnail = try enclosure.decode(String.self, forKey: .thumbnail)
-            
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            items = try container.decode([Item].self, forKey: .items)
         }
-        
-        
     }
     
-//    struct Item : Decodable {
-//        let title : String
-//        let pubDate : String
-//        let thumbnail : String
-//        let enclosure : Enclosure
-//    }
-//
-//    struct Enclosure: Decodable {
-//        let link : String?
-//    }
     
     func getFeed(){
         
@@ -93,8 +56,12 @@ class NewsFeedNetworking {
                 if response?.statusCode == 200{
                     
                     //call function to parse received JSON data
-                    var allFeedData : [CellModel] = []
-                    allFeedData =  weakSelf.addData(jsonData: responseData)
+                    var allFeedData : [Item] = []
+                    
+                    if let alldata = weakSelf.addData(jsonData: responseData) {
+                        allFeedData  = alldata
+                    }
+                    
                     //completion(allFeedData)
                 }
                 
@@ -107,34 +74,19 @@ class NewsFeedNetworking {
     
     
     //MARK: parse JSON data received and add to data structure
-    func addData(jsonData : Data) -> [CellModel]{
-        
-        let allFeedData : [CellModel] = []
+    func addData(jsonData : Data) -> [Item]?{
         
         do {
             
             let responseData = try JSONDecoder().decode(Response.self, from: jsonData)
             
-            
-            
-            //            if let feed = container["feed"] {
-            //                print( feed.results.count)
-            //
-            //                for each in feed.results {
-            //
-            //                    let feedModel = FeedDataModel(songName: each.name, artistName: each.artistName, imageURL: each.artworkUrl100)
-            //                    allFeedData.append(feedModel)
-            //
-            //                }
-            //
-            //            }
-            
+            return responseData.items
             
         } catch {
             print("feed JSON parsing error")
         }
         
-        return allFeedData
+        return nil
         
     }
 }

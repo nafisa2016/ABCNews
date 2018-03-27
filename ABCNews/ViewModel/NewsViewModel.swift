@@ -11,7 +11,7 @@ import Foundation
 class NewsViewModel {
     
     //MARK:- Declarations
-    var newsFeed : [CellModel]
+    var newsFeed : [Item]
     var newsFeedNetworking: NewsFeedNetworking!
     
     
@@ -49,19 +49,25 @@ extension NewsViewModel {
     //MARK:- Get cell title
     func getCellTitle(row: Int) -> String {
         
-        return newsFeed[row].cellTitle
+        return newsFeed[row].title
     }
     
     //MARK:- Get Cell Publish date
     func getCellPublishDate(row:Int) -> String {
         
-        return newsFeed[row].cellPublishDate
+        return newsFeed[row].pubDate
     }
     
     //MARK:- Get Cell Image link
     func getCellImageLink(row: Int) -> String {
         
-        return newsFeed[row].cellImgLink
+        return newsFeed[row].link
+    }
+    
+    //MARK:- Get cell thumbnail
+    func getCellThumbnail(row: Int) -> String {
+        
+        return newsFeed[row].thumbnail ?? ""
     }
     
     //MARK:- Get news feed

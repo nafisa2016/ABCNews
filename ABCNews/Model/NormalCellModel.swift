@@ -8,36 +8,35 @@
 
 import Foundation
 
-class CellModel   {
+struct Item: Decodable {
+    let title : String
+    let pubDate : String
+    let thumbnail : String?
+    let link : String
     
-    var cellImgLink: String
-    var cellTitle: String
-    var cellPublishDate: String
-    
-    init(cellImgLink: String,cellTitle:String,cellPublishDate:String){
-        
-        self.cellImgLink       = cellImgLink
-        self.cellTitle         = cellTitle
-        self.cellPublishDate   = cellPublishDate
-        
+    enum CodingKeys : String, CodingKey {
+        case title
+        case pubDate
+        case link
+        case enclosure
     }
     
-//    enum CodingKeys: String,CodingKey {
-//
-//        case cellTitle = "title"
-//        case cellPublishDate = "pubDate"
-//        case cellImgLink = "thumbnail"
-//    }
-//
-//    required init(from decoder: Decoder) throws {
-//
-//        let values = try decoder.container(keyedBy: CodingKeys.self)
-//
-//        cellTitle = try values.decode(String.self, forKey: .cellTitle)
-//        cellPublishDate = try values.decode(String.self, forKey: .cellPublishDate)
-//        cellImgLink = try values.decode(String.self, forKey: .cellImgLink)
-//
-//    }
+    enum EnclosureKeys : String , CodingKey {
+        case thumbnail
+    }
+    
+    init(from decoder: Decoder) throws {
+        let item = try decoder.container(keyedBy: CodingKeys.self)
+        
+        title = try item.decode(String.self,forKey: .title)
+        pubDate = try item.decode(String.self,forKey: .pubDate)
+        link = try item.decode(String.self,forKey: .link)
+        
+        let enclosure = try item.nestedContainer(keyedBy: EnclosureKeys.self, forKey: .enclosure)
+        
+        thumbnail = try enclosure.decodeIfPresent(String.self, forKey: .thumbnail)
+        
+    }
     
 }
 
