@@ -21,6 +21,19 @@ class NewsTableViewController: UITableViewController {
         
         tableView.contentInset = UIEdgeInsets.zero
         
+        //MARK:- large title
+        if #available(iOS 11.0, *) {
+            
+            navigationController?.navigationBar.prefersLargeTitles = true
+            navigationController?.navigationBar.topItem?.title = "ABC News"
+            navigationController?.navigationItem.largeTitleDisplayMode = .automatic
+            
+        } else {
+            
+            navigationController?.navigationBar.topItem?.title = "ABC News"
+        }
+        
+        
         //get news feed
         newsViewModel.getNewsFeed{
             self.tableView.reloadData()
@@ -73,14 +86,4 @@ class NewsTableViewController: UITableViewController {
         }
         
     }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        return UITableViewAutomaticDimension
-    }
-    
-    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
-    }
-
 }
