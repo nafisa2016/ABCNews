@@ -19,7 +19,7 @@
         <!--News Table View Controller-->
         <scene sceneID="uvQ-iJ-YAa">
             <objects>
-                <tableViewController id="YFw-5D-Fvu" customClass="NewsTableViewController" customModule="ABCNews" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="newsTableViewController" id="YFw-5D-Fvu" customClass="NewsTableViewController" customModule="ABCNews" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Fph-w0-CQB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

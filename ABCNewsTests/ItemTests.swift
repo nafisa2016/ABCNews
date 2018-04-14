@@ -1,15 +1,14 @@
 //
-//  ABCNewsTests.swift
+//  ItemTests.swift
 //  ABCNewsTests
 //
-//  Created by Nafisa Rahman on 3/18/18.
+//  Created by Nafisa Rahman on 4/8/18.
 //  Copyright © 2018 com.nafisa. All rights reserved.
 //
 
 import XCTest
-@testable import ABCNews
 
-class ABCNewsTests: XCTestCase {
+class ItemTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
